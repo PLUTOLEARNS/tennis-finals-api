@@ -27,7 +27,7 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:8080", "http://127.0.0.1:8080"],
+    allow_origins=["*"],  # Allow all origins for hosted version
     allow_credentials=False,
     allow_methods=["GET"],
     allow_headers=["*"],
@@ -35,7 +35,7 @@ app.add_middleware(
 
 app.add_middleware(
     TrustedHostMiddleware, 
-    allowed_hosts=["localhost", "127.0.0.1"]
+    allowed_hosts=["*"]  # Allow all hosts for hosted version
 )
 
 scraper = TennisScraper()
