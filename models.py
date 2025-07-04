@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field
 
-class WimbledonResult(BaseModel):
+class TennisResult(BaseModel):
     year: int = Field(..., description="Year of the championship")
     champion: str = Field(..., description="Name of the champion")
     runner_up: str = Field(..., description="Name of the runner-up")

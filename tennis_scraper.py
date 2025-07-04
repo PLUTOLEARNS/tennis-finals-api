@@ -3,20 +3,20 @@ import asyncio
 from bs4 import BeautifulSoup
 import re
 from typing import Dict, Any, Optional
-from models import WimbledonResult
+from models import TennisResult
 import logging
 
 logger = logging.getLogger(__name__)
 
-class WimbledonScraper:
+class TennisScraper:
     
     def __init__(self):
         self.headers = {
-            'User-Agent': 'WimbledonAPI/1.0 (Educational Project; titantheven@gmail.com) Python/3.12',
+            'User-Agent': 'TennisAPI/1.0 (Educational Project; titantheven@gmail.com) Python/3.12',
         }
         self.max_content_length = 5 * 1024 * 1024
     
-    async def get_wimbledon_result(self, year: int) -> WimbledonResult:
+    async def get_tennis_result(self, year: int) -> TennisResult:
         if not (1877 <= year <= 2030):
             raise ValueError("Invalid year range")
             
@@ -48,11 +48,11 @@ class WimbledonScraper:
                         
                         result = self._parse_infobox(soup, year)
                         if result:
-                            return WimbledonResult(**result)
+                            return TennisResult(**result)
                         
                         result = self._parse_results_table(soup, year)
                         if result:
-                            return WimbledonResult(**result)
+                            return TennisResult(**result)
                         
                         raise Exception("Could not find final match data")
                     else:

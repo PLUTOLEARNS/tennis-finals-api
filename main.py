@@ -6,8 +6,8 @@ from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 import uvicorn
 import logging
-from wimbledon_scraper import WimbledonScraper
-from models import WimbledonResult
+from tennis_scraper import TennisScraper
+from models import TennisResult
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -38,7 +38,7 @@ app.add_middleware(
     allowed_hosts=["localhost", "127.0.0.1"]
 )
 
-scraper = WimbledonScraper()
+scraper = TennisScraper()
 
 @app.get("/")
 @limiter.limit("30/minute")
@@ -58,13 +58,13 @@ async def get_tennis_final_result(
     year: int = Query(..., description="Year of tennis championship", ge=1877, le=2030)
 ):
     if year < 1877:
-        raise HTTPException(status_code=400, detail="Wimbledon started in 1877")
+        raise HTTPException(status_code=400, detail="Tennis championships started in 1877")
     if year > 2030:
         raise HTTPException(status_code=400, detail="Invalid year")
     
     try:
-        logger.info(f"Fetching Wimbledon data for year: {year}")
-        result = await scraper.get_wimbledon_result(year)
+        logger.info(f"Fetching tennis final data for year: {year}")
+        result = await scraper.get_tennis_result(year)
         
         return {
             "year": result.year,
@@ -78,7 +78,7 @@ async def get_tennis_final_result(
         logger.error(f"Error fetching data for year {year}: {str(e)}")
         raise HTTPException(
             status_code=404, 
-            detail=f"Wimbledon data not available for year {year}"
+            detail=f"Tennis final data not available for year {year}"
         )
 
 @app.get("/health")

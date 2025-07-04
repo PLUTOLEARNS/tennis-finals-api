@@ -4,7 +4,7 @@ A FastAPI-based REST API that extracts tennis championship final results from Wi
 
 ## Features
 
-- REST API endpoint: `GET /wimbledon?year=YYYY`
+- REST API endpoint: `GET /tennis-finals?year=YYYY`
 - Web scraping from Wikipedia
 - Automatic tiebreak detection
 - Structured JSON responses
@@ -72,6 +72,6 @@ API available at: `http://localhost:8080`
 ```
 ├── main.py              # FastAPI application
 ├── models.py            # Pydantic data models
-├── wimbledon_scraper.py # Web scraping logic
+├── tennis_scraper.py      # Web scraping logic
 └── requirements.txt     # Dependencies
 ```
