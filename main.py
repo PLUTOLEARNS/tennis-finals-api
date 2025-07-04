@@ -15,8 +15,8 @@ logger = logging.getLogger(__name__)
 limiter = Limiter(key_func=get_remote_address)
 
 app = FastAPI(
-    title="Wimbledon API",
-    description="REST API for Wimbledon Men's Singles Final Results",
+    title="Tennis Finals API",
+    description="REST API for Tennis Championship Final Results",
     version="1.0.0",
     docs_url="/docs",
     redoc_url=None
@@ -44,18 +44,18 @@ scraper = WimbledonScraper()
 @limiter.limit("30/minute")
 async def root(request: Request):
     return {
-        "message": "Wimbledon API",
-        "description": "Get Wimbledon Men's Singles Final Results",
+        "message": "Tennis Finals API",
+        "description": "Get Tennis Championship Final Results",
         "endpoints": {
-            "wimbledon": "/wimbledon?year=YYYY"
+            "tennis-finals": "/tennis-finals?year=YYYY"
         }
     }
 
-@app.get("/wimbledon")
+@app.get("/tennis-finals")
 @limiter.limit("10/minute")
-async def get_wimbledon_result(
+async def get_tennis_final_result(
     request: Request,
-    year: int = Query(..., description="Year of Wimbledon championship", ge=1877, le=2030)
+    year: int = Query(..., description="Year of tennis championship", ge=1877, le=2030)
 ):
     if year < 1877:
         raise HTTPException(status_code=400, detail="Wimbledon started in 1877")

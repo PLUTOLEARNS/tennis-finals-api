@@ -1,6 +1,6 @@
-# Wimbledon REST API
+# Tennis Finals API
 
-A FastAPI-based REST API that extracts Wimbledon Men's Singles Final results from Wikipedia.
+A FastAPI-based REST API that extracts tennis championship final results from Wikipedia, focusing on major tournaments like Wimbledon.
 
 ## Features
 
@@ -25,10 +25,12 @@ python main.py
 
 API available at: `http://localhost:8080`
 
+**Note:** This API scrapes publicly available Wikipedia data for educational purposes.
+
 ## API Endpoints
 
 - `GET /` - API information
-- `GET /wimbledon?year=YYYY` - Get Wimbledon result for specific year
+- `GET /tennis-finals?year=YYYY` - Get tennis final result for specific year
 - `GET /health` - Health check
 - `GET /docs` - Interactive API documentation
 
