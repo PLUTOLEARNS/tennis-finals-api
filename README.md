@@ -4,7 +4,7 @@ A FastAPI-based REST API that extracts tennis championship final results from Wi
 
 ## Features
 
-- REST API endpoint: `GET /tennis-finals?year=YYYY`
+- REST API endpoint: `GET /wimbledon?year=YYYY`
 - Web scraping from Wikipedia
 - Automatic tiebreak detection
 - Structured JSON responses
@@ -30,7 +30,7 @@ API available at: `http://localhost:8080`
 ## API Endpoints
 
 - `GET /` - API information
-- `GET /tennis-finals?year=YYYY` - Get tennis final result for specific year
+- `GET /wimbledon?year=YYYY` - Get tennis final result for specific year
 - `GET /health` - Health check
 - `GET /docs` - Interactive API documentation
 

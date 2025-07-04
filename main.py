@@ -47,13 +47,13 @@ async def root(request: Request):
         "message": "Tennis Finals API",
         "description": "Get Tennis Championship Final Results",
         "endpoints": {
-            "tennis-finals": "/tennis-finals?year=YYYY"
+            "wimbledon": "/wimbledon?year=YYYY"
         }
     }
 
-@app.get("/tennis-finals")
+@app.get("/wimbledon")
 @limiter.limit("10/minute")
-async def get_tennis_final_result(
+async def get_wimbledon_result(
     request: Request,
     year: int = Query(..., description="Year of tennis championship", ge=1877, le=2030)
 ):
