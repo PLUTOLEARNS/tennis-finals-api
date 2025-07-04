@@ -24,22 +24,41 @@ def handler(event, context):
                 'body': ''
             }
         
-        # Get the path from the event
+        # Get the path from the event - try multiple possible locations
         path = event.get('path', '/')
+        raw_url = event.get('rawUrl', '')
+        query_params = event.get('queryStringParameters') or {}
+        
+        # Debug: Check what we're getting
+        debug_info = {
+            'path': path,
+            'rawUrl': raw_url,
+            'queryParams': query_params,
+            'event_keys': list(event.keys())
+        }
+        
+        # Determine endpoint from path or rawUrl
+        if 'wimbledon' in path or 'wimbledon' in raw_url:
+            endpoint = 'wimbledon'
+        elif 'health' in path or 'health' in raw_url:
+            endpoint = 'health'
+        else:
+            endpoint = 'root'
         
         # Handle different endpoints
-        if path == '/' or path == '/api' or 'app' in path:
+        if endpoint == 'root':
             # Root endpoint
             response_body = {
                 "message": "Tennis Finals API",
                 "description": "Get Tennis Championship Final Results",
                 "version": "1.0.0",
+                "debug": debug_info,
                 "endpoints": {
                     "root": "/",
                     "wimbledon": "/wimbledon?year=YYYY",
                     "health": "/health"
                 },
-                "example": "https://your-site.netlify.app/wimbledon?year=2023"
+                "example": "https://inspiring-concha-308678.netlify.app/wimbledon?year=2023"
             }
             return {
                 'statusCode': 200,
@@ -47,16 +66,18 @@ def handler(event, context):
                 'body': json.dumps(response_body)
             }
         
-        elif 'wimbledon' in path:
+        elif endpoint == 'wimbledon':
             # Wimbledon endpoint
-            query_params = event.get('queryStringParameters') or {}
             year_param = query_params.get('year')
             
             if not year_param:
                 return {
                     'statusCode': 400,
                     'headers': headers,
-                    'body': json.dumps({'error': 'Year parameter is required. Example: /wimbledon?year=2023'})
+                    'body': json.dumps({
+                        'error': 'Year parameter is required. Example: /wimbledon?year=2023',
+                        'debug': debug_info
+                    })
                 }
             
             try:
@@ -136,12 +157,16 @@ def handler(event, context):
                     'body': json.dumps({'error': f'Failed to fetch data for year {year}: {str(e)}'})
                 }
         
-        elif 'health' in path:
+        elif endpoint == 'health':
             # Health check endpoint
             return {
                 'statusCode': 200,
                 'headers': headers,
-                'body': json.dumps({'status': 'healthy', 'timestamp': str(context.get('requestTimeEpoch', 'unknown'))})
+                'body': json.dumps({
+                    'status': 'healthy', 
+                    'timestamp': str(context.get('requestTimeEpoch', 'unknown')),
+                    'debug': debug_info
+                })
             }
         
         else:

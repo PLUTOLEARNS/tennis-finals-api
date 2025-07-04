@@ -7,21 +7,19 @@
   PYTHON_VERSION = "3.11"
 
 [[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/api"
-  status = 200
-
-[[redirects]]
   from = "/wimbledon"
   to = "/.netlify/functions/api"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/health"
   to = "/.netlify/functions/api"
   status = 200
+  force = true
 
 [[redirects]]
-  from = "/*"
+  from = "/api"
   to = "/.netlify/functions/api"
   status = 200
+  force = true
