@@ -8,18 +8,18 @@
 
 [[redirects]]
   from = "/wimbledon"
-  to = "/.netlify/functions/api"
+  to = "/.netlify/functions/wimbledon"
   status = 200
   force = true
 
 [[redirects]]
   from = "/health"
-  to = "/.netlify/functions/api"
+  to = "/.netlify/functions/health"
   status = 200
   force = true
 
 [[redirects]]
   from = "/api"
-  to = "/.netlify/functions/api"
+  to = "/.netlify/functions/wimbledon"
   status = 200
   force = true
