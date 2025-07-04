@@ -1,6 +1,6 @@
 import json
 
-def lambda_handler(event, context):
+def handler(event, context):
     """
     Health check function
     """
@@ -20,6 +20,3 @@ def lambda_handler(event, context):
             'timestamp': str(context.get('requestTimeEpoch', 'unknown'))
         })
     }
-
-# Also export as handler for compatibility
-handler = lambda_handler
