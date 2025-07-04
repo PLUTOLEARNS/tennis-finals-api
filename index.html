@@ -378,7 +378,22 @@
             
             try {
                 const response = await fetch(`/.netlify/functions/wimbledon?year=${year}`);
-                const data = await response.json();
+                console.log('Response status:', response.status);
+                console.log('Response headers:', response.headers);
+                
+                // Get the raw response text first
+                const responseText = await response.text();
+                console.log('Raw response:', responseText);
+                
+                // Try to parse as JSON
+                let data;
+                try {
+                    data = JSON.parse(responseText);
+                } catch (parseError) {
+                    console.error('JSON Parse Error:', parseError);
+                    showError(`Server returned invalid JSON. Response was: ${responseText.substring(0, 200)}...`);
+                    return;
+                }
                 
                 if (response.ok) {
                     displayResults(data);
@@ -386,6 +401,7 @@
                     showError(data.error || 'Failed to fetch data');
                 }
             } catch (error) {
+                console.error('Full error:', error);
                 showError('Network error: ' + error.message);
             } finally {
                 loading.style.display = 'none';
